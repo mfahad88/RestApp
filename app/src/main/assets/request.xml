@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.bi.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:getHelloWorldAsString>
+         <arg0>%s</arg0>
+      </ws:getHelloWorldAsString>
+   </soapenv:Body>
+</soapenv:Envelope>
