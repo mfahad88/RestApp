@@ -1,0 +1,21 @@
+STEP 1:
+openssl genrsa -des3 -out client_key.pem 2048
+openssl genrsa -des3 -out server_key.pem 2048
+
+STEP 2:
+openssl req -new -x509 -key client_key.pem -out client.pem -days 365
+openssl req -new -x509 -key server_key.pem -out server.pem -days 365
+
+STEP 3:
+keytool -importcert -trustcacerts -file "server.pem" -keystore "clienttruststore.bks" -provider org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath "bcprov-jdk15on-157.jar" -storetype BKS -storepass 123456
+keytool -importcert -trustcacerts -file "client.pem" -keystore "servertruststore.jks" -storetype JKS -storepass 123456
+
+STEP 4:
+openssl pkcs12 -export -out client.p12 -inkey client_key.pem -in client.pem
+openssl pkcs12 -export -out server.p12 -inkey server_key.pem -in server.pem
+
+STEP 5:
+keytool -importkeystore -srckeystore client.p12 -srcstoretype PKCS12 -srcstorepass 123456 -destkeystore client.bks -deststoretype BKS -deststorepass 123456 -provider org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath bcprov-jdk15on-157.jar
+keytool -importkeystore -srckeystore server.p12 -srcstoretype PKCS12 -destkeystore server.jks -deststoretype JKS 
+
+====================================================================
