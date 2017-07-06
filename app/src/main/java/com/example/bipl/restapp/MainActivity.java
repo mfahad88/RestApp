@@ -11,6 +11,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
@@ -21,11 +22,13 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
+import org.ksoap2.SoapFault;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.KeyStore;
+import java.util.Enumeration;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -42,7 +45,18 @@ public class MainActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        getRestwithClient();
+        try {
+           /* KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
+            ks.load(null);
+            Enumeration<String> aliases = ks.aliases();
+            while(aliases.hasMoreElements()) {
+                tv.setText(aliases.nextElement());
+            }*/
+            tv.setText(ApplicationManager.helloWorld("fahad",getApplicationContext()));
+        } catch (Exception soapFault) {
+            soapFault.printStackTrace();
+        }
+        // getRestwithClient();
     }
 
   /*  public void getRest() {

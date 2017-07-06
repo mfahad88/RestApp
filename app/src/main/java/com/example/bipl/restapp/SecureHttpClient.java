@@ -18,24 +18,25 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 
 
-
 public class SecureHttpClient extends DefaultHttpClient {
     private static final String TAG = "Secure>>>>>>>>>";
     private int securePort;
     private Context context;
-    public SecureHttpClient(final int port,Context ctx) {
+
+    public SecureHttpClient(final int port, Context ctx) {
         this.securePort = port;
-        this.context=ctx;
+        this.context = ctx;
     }
+
     private SSLSocketFactory createSSLSocketFactory() throws CertificateException, NoSuchAlgorithmException, IOException, KeyStoreException {
         Log.d(TAG, "Creating SSL socket factory");
 
         final KeyStore truststore = KeyStore.getInstance("BKS");
 
-        truststore.load(context.getResources().openRawResource(R.raw.clienttruststore),"123456".toCharArray());
+        truststore.load(context.getResources().openRawResource(R.raw.clienttruststore), "123456".toCharArray());
 
         final KeyStore keystore = KeyStore.getInstance("BKS");
-        keystore.load(context.getResources().openRawResource(R.raw.client),"123456".toCharArray());
+        keystore.load(context.getResources().openRawResource(R.raw.client), "123456".toCharArray());
 
         return this.createFactory(keystore, "123456", truststore);
     }
@@ -56,6 +57,7 @@ public class SecureHttpClient extends DefaultHttpClient {
 
         return factory;
     }
+
     @Override
     protected ClientConnectionManager createClientConnectionManager() {
         Log.d(TAG, "Creating client connection manager");
